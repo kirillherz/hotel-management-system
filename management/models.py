@@ -2,24 +2,24 @@ from django.db import models
 
 class Valuta(models.Model):
     name = models.CharField(max_length = 50, verbose_name = 'Название')
-    abbreviation = models.CharField(max_length = 20, verbose_name = 'сокращение')
+    abbreviation = models.CharField(max_length = 20, verbose_name = 'Сокращение')
 
     class Meta:
         verbose_name = 'Валюта'
         verbose_name_plural = 'Валюта'
     
 class Tariff(models.Model):
-    name = models.CharField(max_length = 50, verbose_name = 'название тариффа')
-    valuta = models.ForeignKey(Valuta, verbose_name = 'валюта')
+    name = models.CharField(max_length = 50, verbose_name = 'Название тариффа')
+    valuta = models.ForeignKey(Valuta, verbose_name = 'Валюта')
     units = models.IntegerField(verbose_name = 'Единицы')
 
     class Meta:
-        verbose_name = 'Тарифф'
-        verbose_name_plural = 'Тариффы'
+        verbose_name = 'Тариф'
+        verbose_name_plural = 'Тарифы'
     
 class Room(models.Model):
     number = models.IntegerField(verbose_name = 'Номер комнаты')
-    tariff = models.ForeignKey(Tarrif, verbose_name = 'Тарифф')
+    tariff = models.ForeignKey(Tarrif, verbose_name = 'Тариф')
     is_free = models.BooleanField(verbose_name = 'Свободна/занята')
 
     class Meta:
@@ -37,11 +37,11 @@ class Unit_of_measurement(models.Model):
 class Additional_payment(models.Model):
     name = models.CharField(max_length = 50, verbose_name = 'Название платежа')
     unit_of_measurement = models.ForeignKey(Unit_of_measurement, verbose_name = 'Единица измерения')
-    tariff = models.ForeignKey(Tariff, verbose_name = 'Тарифф')
-    bill = models.ForeignKey(Bill, verbonse_name = 'Итоговый счет', on_delete = models.CASCADE)
+    tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
+    bill = models.ForeignKey(Bill, verbonse_name = 'Итоговый счёт', on_delete = models.CASCADE)
 
     class Meta:
-        verbose_name = 'Дополнительный платеж'
+        verbose_name = 'Дополнительный платёж'
         verbose_name_plural = 'Дополнительные платежи'
         
 class Bill(models.Model):
@@ -65,7 +65,7 @@ class Record(models.Model):
     date_of_birth = models.DateField(verbose_name = 'Дата рождения')
     date_in = models.DateField(verbose_name = 'Дата въезда')
     date_out = models.DateField(verbose_name = 'Дата выезда')
-    bill = models.ForeignKey(Bill, on_delete = models.CASCADE, verbose_name = 'счет')
+    bill = models.ForeignKey(Bill, on_delete = models.CASCADE, verbose_name = 'Счет')
 
     class Meta:
         verbose_name = 'Запись о регистрации'
