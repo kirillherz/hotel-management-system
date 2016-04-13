@@ -1,3 +1,11 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+admin.site.register(Valuta)
+admin.site.register(Tariff)
+admin.site.register(Room)
+admin.site.register(Unit_of_measurement)
+admin.site.register(Bill)
+admin.site.register(Additional_payment)
+admin.site.register(Record)
+
