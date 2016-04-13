@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -18,7 +18,14 @@
 {{ form.as_p }}
   <input type="submit">
  {%for room in rooms %}
- {{ room.number }}
+<br>
+Номер комнаты:   {{ room.number }}
+<br>
+Название тарифа: {{ room.tarrif_name }}
+<br>
+Стоимость: {{ room.units }} {{ room.valuta_name }}
+<hr>
+
  {% endfor %} 
 </form>
 </body>
