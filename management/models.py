@@ -35,7 +35,6 @@ class Unit_of_measurement(models.Model):
         verbose_name_plural = 'Единицы измерения'
 
 class Bill(models.Model):
-    room = models.ForeignKey(Room, verbose_name = 'Комната')
     date = models.DateField(verbose_name = 'Дата платежа')
     total = models.DecimalField(max_digits = 19, decimal_places = 2,verbose_name = 'Итог')
 
@@ -67,6 +66,7 @@ class Record(models.Model):
     date_in = models.DateField(verbose_name = 'Дата въезда')
     date_out = models.DateField(verbose_name = 'Дата выезда')
     bill = models.ForeignKey(Bill, on_delete = models.CASCADE, verbose_name = 'Счет')
+    room = models.ForeignKey(Room, verbose_name = 'Комната')
 
     class Meta:
         verbose_name = 'Запись о регистрации'
