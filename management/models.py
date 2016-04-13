@@ -19,7 +19,7 @@ class Tariff(models.Model):
     
 class Room(models.Model):
     number = models.IntegerField(verbose_name = 'Номер комнаты')
-    tariff = models.ForeignKey(Tarrif, verbose_name = 'Тарифф')
+    tariff = models.ForeignKey(Tariff, verbose_name = 'Тарифф')
     is_free = models.BooleanField(verbose_name = 'Свободна/занята')
 
     class Meta:
@@ -34,25 +34,25 @@ class Unit_of_measurement(models.Model):
         verbose_name = 'Единица измерения'
         verbose_name_plural = 'Единицы измерения'
 
-class Additional_payment(models.Model):
-    name = models.CharField(max_length = 50, verbose_name = 'Название платежа')
-    unit_of_measurement = models.ForeignKey(Unit_of_measurement, verbose_name = 'Единица измерения')
-    tariff = models.ForeignKey(Tariff, verbose_name = 'Тарифф')
-    bill = models.ForeignKey(Bill, verbonse_name = 'Итоговый счет', on_delete = models.CASCADE)
-
-    class Meta:
-        verbose_name = 'Дополнительный платеж'
-        verbose_name_plural = 'Дополнительные платежи'
-        
 class Bill(models.Model):
     room = models.ForeignKey(Room, verbose_name = 'Комната')
-    date = models.DateField(varbose_name = 'Дата платежа')
-    total = models.DecimalField(verbose_name = 'Итог')
+    date = models.DateField(verbose_name = 'Дата платежа')
+    total = models.DecimalField(max_digits = 19, decimal_places = 2,verbose_name = 'Итог')
 
     class Meta:
         verbose_name = 'Счет'
         verbose_name_plural = 'Счета'
 
+class Additional_payment(models.Model):
+    name = models.CharField(max_length = 50, verbose_name = 'Название платежа')
+    unit_of_measurement = models.ForeignKey(Unit_of_measurement, verbose_name = 'Единица измерения')
+    tariff = models.ForeignKey(Tariff, verbose_name = 'Тарифф')
+    bill = models.ForeignKey(Bill, verbose_name = 'Итоговый счет', on_delete = models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Дополнительный платеж'
+        verbose_name_plural = 'Дополнительные платежи'
+        
 class Record(models.Model):
     first_name = models.CharField(max_length = 50, verbose_name = 'Имя')
     middle_name = models.CharField(max_length = 50, verbose_name = 'Отчество')
