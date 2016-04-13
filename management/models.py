@@ -19,7 +19,7 @@ class Tariff(models.Model):
     
 class Room(models.Model):
     number = models.IntegerField(verbose_name = 'Номер комнаты')
-    tariff = models.ForeignKey(Tarrif, verbose_name = 'Тариф')
+    tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
     is_free = models.BooleanField(verbose_name = 'Свободна/занята')
 
     class Meta:
@@ -47,7 +47,7 @@ class Additional_payment(models.Model):
     name = models.CharField(max_length = 50, verbose_name = 'Название платежа')
     unit_of_measurement = models.ForeignKey(Unit_of_measurement, verbose_name = 'Единица измерения')
     tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
-    bill = models.ForeignKey(Bill, verbonse_name = 'Итоговый счёт', on_delete = models.CASCADE)
+    bill = models.ForeignKey(Bill, verbose_name = 'Итоговый счёт', on_delete = models.CASCADE)
 
 
     class Meta:
