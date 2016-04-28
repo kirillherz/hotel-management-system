@@ -21,10 +21,13 @@ class Room(models.Model):
     number = models.IntegerField(verbose_name = 'Номер комнаты')
     tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
     is_free = models.BooleanField(verbose_name = 'Свободна/занята')
-
+ 
     class Meta:
         verbose_name = 'Комната'
         verbose_name_plural = 'Комнаты'
+
+    def __str__(self):
+        return str(self.number)
 
 class Unit_of_measurement(models.Model):
     name = models.CharField(max_length = 50, verbose_name = 'Полное название')
