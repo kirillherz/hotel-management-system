@@ -4,6 +4,9 @@ class Valuta(models.Model):
     name = models.CharField(max_length = 50, verbose_name = 'Название')
     abbreviation = models.CharField(max_length = 20, verbose_name = 'Сокращение')
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = 'Валюта'
         verbose_name_plural = 'Валюта'
@@ -12,6 +15,9 @@ class Tariff(models.Model):
     name = models.CharField(max_length = 50, verbose_name = 'Название тариффа')
     valuta = models.ForeignKey(Valuta, verbose_name = 'Валюта')
     units = models.IntegerField(verbose_name = 'Единицы')
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = 'Тариф'
@@ -33,6 +39,9 @@ class Unit_of_measurement(models.Model):
     name = models.CharField(max_length = 50, verbose_name = 'Полное название')
     reduction = models.CharField(max_length = 50, verbose_name = 'Сокращение')
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = 'Единица измерения'
         verbose_name_plural = 'Единицы измерения'
@@ -40,6 +49,9 @@ class Unit_of_measurement(models.Model):
 class Bill(models.Model):
     date = models.DateField(verbose_name = 'Дата платежа')
     total = models.DecimalField(max_digits = 19, decimal_places = 2,verbose_name = 'Итог')
+
+    def __str__(self):
+        return str(self.total)
 
     class Meta:
         verbose_name = 'Счет'
@@ -51,6 +63,8 @@ class Additional_payment(models.Model):
     tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
     bill = models.ForeignKey(Bill, verbose_name = 'Итоговый счёт', on_delete = models.CASCADE)
 
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = 'Дополнительный платёж'
@@ -70,6 +84,9 @@ class Record(models.Model):
     date_out = models.DateField(verbose_name = 'Дата выезда')
     bill = models.ForeignKey(Bill, on_delete = models.CASCADE, verbose_name = 'Счет')
     room = models.ForeignKey(Room, verbose_name = 'Комната')
+
+    def __str__(self):
+        return self.last_name
 
     class Meta:
         verbose_name = 'Запись о регистрации'
