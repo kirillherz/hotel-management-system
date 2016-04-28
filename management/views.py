@@ -3,6 +3,7 @@ from django import forms
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
+from django.forms import ModelForm
 
 class SelectDateForm(forms.Form):
     date_in = forms.DateField()
@@ -20,7 +21,7 @@ def listRooms(request):
       management_valuta
     where 
       management_room.id IS NOT (SELECT management_record.room_id from management_record where
-      management_record.date_in > %s and management_record.date_out < '2018-01-01' )
+      management_record.date_in > %s and management_record.date_out < %s )
     and 
       management_tariff.id = management_room.tariff_id
     and 
@@ -37,6 +38,35 @@ def listRooms(request):
                                                'form' : form,
                                                'rooms': rooms,
                                               })
+
+class RecordForm(ModelForm):
+    class Meta:
+        model = Record
+        fields = ['first_name',
+                  'middle_name',
+                  'last_name',
+                  'country',
+                  'city',
+                  'passport_series',
+                  'passport_id',
+                  'issued',
+                  'date_of_birth',
+                  'date_in',
+                  'date_out',
+                  'room']
+    
+def record(request, id_room = None):
+    room = Room.objects.get(pk = id_room)
+    bill = Bill(total = room.tariff.units, date = '1994-06-09')
+    bill.save()
+    record = Record(room = room, bill = bill)
+    form = RecordForm(request.POST or None, instance = record)
+    form.fields['room'].initial = id_room
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return HttpResponse("Зарегестрирован")
+    return render(request, 'register.html', {'form' : form})
+    
     
     
     

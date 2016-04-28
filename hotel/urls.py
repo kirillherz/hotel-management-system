@@ -20,4 +20,6 @@ from management.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rooms/', listRooms),
+    url(r'^record/(\d*)/$', record),
+    url(r'^record/$', record)
 ]
