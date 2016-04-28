@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,7 +11,38 @@
 
 
 <body>
-
+<style>
+    input,  textarea { 
+    padding: 9px;
+    border: solid 1px #E5E5E5;
+    outline: 0;
+    font: normal 13px/100% Verdana,  Tahoma, sans-serif;
+    width: 200px;
+    background: #FFFFFF;
+}
+textarea { 
+    width: 400px;
+    max-width: 400px;
+    height: 150px;
+    line-height: 150%;
+}
+input:hover,  textarea:hover,
+    input:focus,  textarea:focus { 
+    border-color: #8D3232; 
+}
+.form label  { 
+    margin-left: 10px; 
+    color: #999999; 
+}
+.submit  input {
+    width: auto;
+    padding: 9px 15px;
+    background: #617798;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+}
+</style>
 
 <form action='/rooms/' method='post'>
 {% csrf_token %} 
@@ -25,7 +56,7 @@
 <br>
 Стоимость: {{ room.units }} {{ room.valuta_name }}
 <hr>
-
+<a href="record/{{room.id}}">текст ссылки</a>
  {% endfor %} 
 </form>
 </body>
