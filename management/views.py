@@ -73,7 +73,7 @@ def add_payment(request):
     form = PaymentForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         record = form.cleaned_data['record']
-        record.total += form.cleaned_data['tariff'].units
+        record.total += form.cleaned_data['service'].price * form.cleaned_data['size']
         record.save()
         form.save()
         return HttpResponse('Платеж добавлен')

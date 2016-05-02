@@ -68,11 +68,21 @@ class Record(models.Model):
         verbose_name = 'Запись о регистрации'
         verbose_name_plural = 'Записи о регистрации'
 
+class Service(models.Model):
+    name = models.CharField(max_length = 50, verbose_name = 'Сервис')
+    price = models.DecimalField(max_digits = 19, decimal_places = 2,verbose_name = 'Стоимость')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Сервис'
+        verbose_name_plural = 'Сервисы'
 
 class Additional_payment(models.Model):
-    name = models.CharField(max_length = 50, verbose_name = 'Название платежа')
     unit_of_measurement = models.ForeignKey(Unit_of_measurement, verbose_name = 'Единица измерения')
-    tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
+    size = models.IntegerField(verbose_name = 'Количество')
+    service = models.ForeignKey(Service, verbose_name = 'Сервис')
     record = models.ForeignKey(Record)
 
     def __str__(self):
