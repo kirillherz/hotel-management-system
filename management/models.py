@@ -46,17 +46,6 @@ class Unit_of_measurement(models.Model):
         verbose_name = 'Единица измерения'
         verbose_name_plural = 'Единицы измерения'
 
-class Bill(models.Model):
-    date = models.DateField(verbose_name = 'Дата платежа')
-    total = models.DecimalField(max_digits = 19, decimal_places = 2,verbose_name = 'Итог')
-
-    def __str__(self):
-        return str(self.total)
-
-    class Meta:
-        verbose_name = 'Счет'
-        verbose_name_plural = 'Счета'
-
 class Record(models.Model):
     first_name = models.CharField(max_length = 50, verbose_name = 'Имя')
     middle_name = models.CharField(max_length = 50, verbose_name = 'Отчество')
@@ -69,7 +58,7 @@ class Record(models.Model):
     date_of_birth = models.DateField(verbose_name = 'Дата рождения')
     date_in = models.DateField(verbose_name = 'Дата въезда')
     date_out = models.DateField(verbose_name = 'Дата выезда')
-    bill = models.ForeignKey(Bill, on_delete = models.CASCADE, verbose_name = 'Счет')
+    total = models.DecimalField(max_digits = 19, decimal_places = 2,verbose_name = 'Итог')
     room = models.ForeignKey(Room, verbose_name = 'Комната')
 
     def __str__(self):

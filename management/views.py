@@ -52,16 +52,13 @@ class RecordForm(ModelForm):
                   'issued',
                   'date_of_birth',
                   'date_in',
-                  'date_out',
-                  'room']
+                  'date_out',]
     
 def record(request, id_room = None):
     room = Room.objects.get(pk = id_room)
-    bill = Bill(total = room.tariff.units, date = '1994-06-09')
-    bill.save()
-    record = Record(room = room, bill = bill)
+    total = room.tariff.units
+    record = Record(room = room, total = total)
     form = RecordForm(request.POST or None, instance = record)
-    form.fields['room'].initial = id_room
     if request.method == 'POST' and form.is_valid():
         form.save()
         return HttpResponse("Зарегестрирован")
@@ -76,9 +73,8 @@ def add_payment(request):
     form = PaymentForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
         record = form.cleaned_data['record']
-        bill = record.bill
-        bill.total += form.cleaned_data['tariff'].units
-        bill.save()
+        record.total += form.cleaned_data['tariff'].units
+        record.save()
         form.save()
         return HttpResponse('Платеж добавлен')
     return render(request, 'add_payment.html', {'form' : form})
@@ -91,8 +87,9 @@ def bill(request):
     if request.method == 'GET' and form.is_valid():
         record = form.cleaned_data['record']
         payments = Additional_payment.objects.filter(record = record)
-        bill = record.bill
-        return render(request, 'bill.html', {'form':form, 'bill' : bill, 'payments' : payments})
+        total = record.total
+        room_price = record.room.tariff.units
+        return render(request, 'bill.html', {'room_price' : room_price,'form':form, 'total' : total, 'payments' : payments})
     return render(request,'bill.html',{'form':form})
     
     
