@@ -66,7 +66,37 @@ def record(request, id_room = None):
         form.save()
         return HttpResponse("Зарегестрирован")
     return render(request, 'register.html', {'form' : form})
+
+class PaymentForm(ModelForm):
+    class Meta:
+        model = Additional_payment
+        fields = '__all__'
+    
+def add_payment(request):
+    form = PaymentForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        record = form.cleaned_data['record']
+        bill = record.bill
+        bill.total += form.cleaned_data['tariff'].units
+        bill.save()
+        form.save()
+        return HttpResponse('Платеж добавлен')
+    return render(request, 'add_payment.html', {'form' : form})
+
+class BillForm(forms.Form):
+    record = forms.ModelChoiceField(queryset = Record.objects.all())
+    
+def bill(request):
+    form = BillForm(request.GET or None)
+    if request.method == 'GET' and form.is_valid():
+        record = form.cleaned_data['record']
+        payments = Additional_payment.objects.filter(record = record)
+        bill = record.bill
+        return render(request, 'bill.html', {'form':form, 'bill' : bill, 'payments' : payments})
+    return render(request,'bill.html',{'form':form})
     
     
     
     
+    
+

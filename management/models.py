@@ -57,19 +57,6 @@ class Bill(models.Model):
         verbose_name = 'Счет'
         verbose_name_plural = 'Счета'
 
-class Additional_payment(models.Model):
-    name = models.CharField(max_length = 50, verbose_name = 'Название платежа')
-    unit_of_measurement = models.ForeignKey(Unit_of_measurement, verbose_name = 'Единица измерения')
-    tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
-    bill = models.ForeignKey(Bill, verbose_name = 'Итоговый счёт', on_delete = models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Дополнительный платёж'
-        verbose_name_plural = 'Дополнительные платежи'
-        
 class Record(models.Model):
     first_name = models.CharField(max_length = 50, verbose_name = 'Имя')
     middle_name = models.CharField(max_length = 50, verbose_name = 'Отчество')
@@ -93,6 +80,17 @@ class Record(models.Model):
         verbose_name_plural = 'Записи о регистрации'
 
 
+class Additional_payment(models.Model):
+    name = models.CharField(max_length = 50, verbose_name = 'Название платежа')
+    unit_of_measurement = models.ForeignKey(Unit_of_measurement, verbose_name = 'Единица измерения')
+    tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
+    record = models.ForeignKey(Record)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Дополнительный платёж'
+        verbose_name_plural = 'Дополнительные платежи'
 
     

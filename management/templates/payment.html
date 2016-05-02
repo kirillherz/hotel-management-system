@@ -1,0 +1,7 @@
+<form action='' method='get'>
+{% csrf_token %} 
+{{ form.as_p }}
+  <input type="submit">
+ {%for payemnt in payments %}
+ {{ payment }}
+ {% endfor %} 

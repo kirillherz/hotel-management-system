@@ -1,0 +1,12 @@
+﻿<form action='' method='get'>
+{% csrf_token %} 
+{{ form.as_p }}
+  <input type="submit">
+{% for i in payments %}
+<br>
+{{ i.name }}
+{{ i.tariff.units }}
+
+{% endfor %}
+<hr>
+Итог: {{ bill.total }}
