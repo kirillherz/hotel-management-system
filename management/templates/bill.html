@@ -4,11 +4,10 @@
   <input type="submit">
 {% for i in payments %}
 <br>
-{{ i.name }}
-{{ i.service.price}} X {{ i.size }}
+Услуга:{{ i.service.name }}:{{ i.service.price}} X {{ i.size }}
 
 {% endfor %}
 <br>
-За комнату: {{ room_price }}
+Услуга: За комнату: {{ room_price }}
 <hr>
 Итог: {{ total }}
