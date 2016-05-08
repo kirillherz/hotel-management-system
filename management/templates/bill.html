@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Marzipan</title>
+    <title>HOTLEZ</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,6 +12,21 @@
 
 <body>
 <style>
+      h1{
+    text-align: center;
+    margin: 0 480px 0 500px;
+    background-color: #455A64;
+    font-family: AleksandraC;
+    color: white;
+    }
+    
+     .form {
+    padding: 20px 20px 20px 20px;
+    margin-left: 500px;
+    margin-right: 480px;
+    background-color: #607D8B;
+    }
+    
     input,  textarea { 
     padding: 9px;
     border: solid 1px #E5E5E5;
@@ -43,6 +58,7 @@ input:hover,  textarea:hover,
     color: #000;
 }
 </style>
+<div class="form">
 <form action='' method='get'>
 {% csrf_token %} 
 {{ form.as_p }}
@@ -56,6 +72,7 @@ input:hover,  textarea:hover,
 Услуга: За комнату: {{ room_price }}
 <hr>
 Итог: {{ total }}
-
+</form>
+</div>
 </body>
 </html>

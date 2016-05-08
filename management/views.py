@@ -61,7 +61,7 @@ def record(request, id_room = None):
     form = RecordForm(request.POST or None, instance = record)
     if request.method == 'POST' and form.is_valid():
         form.save()
-        return HttpResponse("Зарегестрирован")
+        return HttpResponse("Клиент успешно зарегистрирован!")
     return render(request, 'register.html', {'form' : form})
 
 class PaymentForm(ModelForm):

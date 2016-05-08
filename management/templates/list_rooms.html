@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Marzipan</title>
+    <title>HOTLEZ</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,24 @@
 
 
 <body>
+    <h1>Выберите дату прибытия <br>
+    и отбытия клиента</h1>
 <style>
+    h1{
+        text-align: center;
+        margin: 0 480px 0 500px;
+        background-color: #455A64;
+        font-family: AleksandraC;
+        color: white;
+    }
+    
+    .form {
+    padding: 20px 20px 20px 20px;
+    margin-left: 500px;
+    margin-right: 480px;
+    background-color: #607D8B;
+    }
+    
     input,  textarea { 
     padding: 9px;
     border: solid 1px #E5E5E5;
@@ -43,21 +60,24 @@ input:hover,  textarea:hover,
     color: #000;
 }
 </style>
-
+<div class="form">
 <form action='/rooms/' method='post'>
-{% csrf_token %} 
-{{ form.as_p }}
+    {% csrf_token %} 
+{{ form.as_p }} <h4>*формат даты: ГГГГ-ММ-ДД</h4>
   <input type="submit">
  {%for room in rooms %}
 <br>
-Номер комнаты:   {{ room.number }}
+Номер комнаты:   {{ room.number }} 
 <br>
 Название тарифа: {{ room.tarrif_name }}
 <br>
 Стоимость: {{ room.units }} {{ room.valuta_name }}
-<hr>
-<a href="/record/{{room.id}}">текст ссылки</a>
+<br>
+<a href="/record/{{room.id}}">Выбрать комнату</a>
+ <hr>
  {% endfor %} 
+
 </form>
+</div>
 </body>
 </html>
