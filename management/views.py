@@ -80,7 +80,7 @@ def add_payment(request):
     return render(request, 'add_payment.html', {'form' : form})
 
 class BillForm(forms.Form):
-    record = forms.ModelChoiceField(queryset = Record.objects.all())
+    record = forms.ModelChoiceField(label = 'Клиент', queryset = Record.objects.all())
     
 def bill(request):
     form = BillForm(request.GET or None)
