@@ -40,6 +40,10 @@ def listRooms(request):
                                               })
 
 class RecordForm(ModelForm):
+
+            raise forms.ValidationError('invalid', code = 'invalid')
+
+
     class Meta:
         model = Record
         fields = ['first_name',
@@ -53,6 +57,8 @@ class RecordForm(ModelForm):
                   'date_of_birth',
                   'date_in',
                   'date_out',]
+
+      
     
 def record(request, id_room = None):
     room = Room.objects.get(pk = id_room)
