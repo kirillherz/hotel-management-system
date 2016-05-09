@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django import forms
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
 from django.forms import ModelForm
@@ -69,6 +69,8 @@ class RecordForm(ModelForm):
       
     
 def record(request, id_room = None):
+    if id_room == None:
+        return HttpResponseRedirect('/rooms')
     room = Room.objects.get(pk = id_room)
     total = room.tariff.units
     record = Record(room = room, total = total)
