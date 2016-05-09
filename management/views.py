@@ -41,8 +41,11 @@ def listRooms(request):
 
 class RecordForm(ModelForm):
 
+    def series_validator(value):
+        if len(str(value)) != 4:
             raise forms.ValidationError('invalid', code = 'invalid')
 
+    passport_series = forms.IntegerField(label = 'Cерия паспорта', validators = [series_validator],error_messages = {'invalid' : 'Некоректная серия'})
 
     class Meta:
         model = Record
