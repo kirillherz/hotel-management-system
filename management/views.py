@@ -6,8 +6,8 @@ from .models import *
 from django.forms import ModelForm
 
 class SelectDateForm(forms.Form):
-    date_in = forms.DateField()
-    date_out = forms.DateField()
+    date_in = forms.DateField(label = 'Дата въезда')
+    date_out = forms.DateField(label = 'Дата выезда')
 
 def listRooms(request):
     sql = """
