@@ -81,7 +81,6 @@ def record(request, id_room = None):
         return HttpResponse("Клиент успешно зарегистрирован!")
     return render(request, 'register.html', {'form' : form})
 
-@login_required(login_url = '/login/')
 class PaymentForm(ModelForm):
     class Meta:
         model = Additional_payment
@@ -98,7 +97,6 @@ def add_payment(request):
         return HttpResponse('Платеж добавлен')
     return render(request, 'add_payment.html', {'form' : form})
 
-@login_required(login_url = '/login/')
 class BillForm(forms.Form):
     record = forms.ModelChoiceField(label = 'Клиент', queryset = Record.objects.all())
     
@@ -121,6 +119,7 @@ from django.contrib.auth import logout
 
 def logout_view(request):
     logout(request)
+    return HttpResponseRedirect('/login/?next=/')
     
     
     
