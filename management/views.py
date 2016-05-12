@@ -13,6 +13,13 @@ def date_validator(value):
         
 class SelectDateForm(forms.Form):
 
+    def clean_date_out(self):
+        date_in = self.data['date_in']
+        date_out = self.data['date_out']
+        if date_in > date_out:
+            raise forms.ValidationError("Некоректная дата")
+        return date_out
+
     date_in = forms.DateField(label = 'Дата въезда', validators = [date_validator],error_messages = {'invalid' : 'Введите корректную дату'})
     date_out = forms.DateField(label = 'Дата выезда')
 
