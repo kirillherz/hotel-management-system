@@ -54,7 +54,7 @@ class RecordForm(ModelForm):
             raise forms.ValidationError('invalid', code = 'invalid')
 
     def passport_id_validator(value):
-        if len(str(value)) != 8:
+        if len(str(value)) != 6:
             raise forms.ValidationError('invalid', code = 'invalid')
 
     passport_series = forms.IntegerField(label = 'Cерия паспорта', validators = [series_validator],error_messages = {'invalid' : 'Некоректная серия','required' : 'обязательное поле',})
