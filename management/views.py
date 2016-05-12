@@ -4,11 +4,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
 from django.forms import ModelForm
+from django.contrib.auth.decorators import login_required
 
 class SelectDateForm(forms.Form):
     date_in = forms.DateField(label = 'Дата въезда')
     date_out = forms.DateField(label = 'Дата выезда')
 
+@login_required(login_url = '/login/')
 def listRooms(request):
     sql = """
     SELECT 
@@ -65,9 +67,8 @@ class RecordForm(ModelForm):
                   'date_of_birth',
                   'date_in',
                   'date_out',]
-
-      
     
+@login_required(login_url = '/login/')
 def record(request, id_room = None):
     if id_room == None:
         return HttpResponseRedirect('/rooms')
@@ -80,11 +81,13 @@ def record(request, id_room = None):
         return HttpResponse("Клиент успешно зарегистрирован!")
     return render(request, 'register.html', {'form' : form})
 
+@login_required(login_url = '/login/')
 class PaymentForm(ModelForm):
     class Meta:
         model = Additional_payment
         fields = '__all__'
-    
+
+@login_required(login_url = '/login/')
 def add_payment(request):
     form = PaymentForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
@@ -95,9 +98,11 @@ def add_payment(request):
         return HttpResponse('Платеж добавлен')
     return render(request, 'add_payment.html', {'form' : form})
 
+@login_required(login_url = '/login/')
 class BillForm(forms.Form):
     record = forms.ModelChoiceField(label = 'Клиент', queryset = Record.objects.all())
     
+@login_required(login_url = '/login/')
 def bill(request):
     form = BillForm(request.GET or None)
     if request.method == 'GET' and form.is_valid():
@@ -108,8 +113,14 @@ def bill(request):
         return render(request, 'bill.html', {'room_price' : room_price,'form':form, 'total' : total, 'payments' : payments})
     return render(request,'bill.html',{'form':form})
 
+@login_required(login_url = '/login/')
 def main(request):
     return render(request, 'main.html',{})
+
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
     
     
     

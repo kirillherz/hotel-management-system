@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from management.views import *
+from django.contrib.auth.views import login
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,5 +25,7 @@ urlpatterns = [
     url(r'^record/$', record),
     url(r'^bill/$', bill),
     url(r'^payment/$', add_payment),
-    url(r'', main),
+    url(r'^login/$', login, {'template_name' : 'login.html'}),
+    url(r'^logout/$', logout_view),
+    url(r'^$', main),
 ]
