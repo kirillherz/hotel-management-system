@@ -27,10 +27,13 @@ class SelectDateForm(forms.Form):
 def listRooms(request):
     sql = """
     SELECT 
-       management_room.number, management_room.id
+       management_room.number, management_room.id, management_tariff.name as tariff_name, management_tariff.units,
+       management_valuta.name as valuta_name
     from 
-       management_room
-    where 
+       management_room, management_tariff, management_valuta
+    where
+        management_room.tariff_id = management_tariff.id
+        and
         management_room.id Not In
         (SELECT management_record.room_id 
 	from management_record 
