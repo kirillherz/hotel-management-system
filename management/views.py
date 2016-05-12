@@ -142,7 +142,7 @@ def record(request, id_room = None,date_in = None,date_out = None):
     form = RecordForm(request.POST or None, instance = record)
     if request.method == 'POST' and form.is_valid():
         form.save()
-        return HttpResponse("Клиент успешно зарегистрирован!")
+        return render(request,'msg.html',{})
     return render(request, 'register.html', {'form' : form})
 
 class PaymentForm(ModelForm):
