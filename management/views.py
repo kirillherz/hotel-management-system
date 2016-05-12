@@ -10,8 +10,10 @@ import datetime
 def date_validator(value):
         if value < datetime.datetime.now().date():
             raise forms.ValidationError('invalid', code = 'invalid')
+        
+class SelectDateForm(forms.Form):
 
-    date_in = forms.DateField(label = 'Дата въезда', validators = [data_validator],error_messages = {'invalid' : 'Введите корректную дату'})
+    date_in = forms.DateField(label = 'Дата въезда', validators = [date_validator],error_messages = {'invalid' : 'Введите корректную дату'})
     date_out = forms.DateField(label = 'Дата выезда')
 
 @login_required(login_url = '/login/')
@@ -64,6 +66,7 @@ class RecordForm(ModelForm):
 
     passport_series = forms.IntegerField(label = 'Cерия паспорта', validators = [series_validator],error_messages = {'invalid' : 'Некоректная серия','required' : 'обязательное поле',})
     passport_id = forms.IntegerField(label = 'Номер паспорта', validators = [passport_id_validator],error_messages = {'invalid' : 'Некоректный номер пасспорта', 'required' : 'обязательное поле'})
+    date_in = forms.DateField(label = 'дата въезда', validators = [date_validator], error_messages = {'invalid' : 'Некоректная дата'})
 
     class Meta:
         model = Record
