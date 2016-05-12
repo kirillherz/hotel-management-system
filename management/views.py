@@ -35,17 +35,17 @@ def listRooms(request):
         (SELECT management_record.room_id 
 	from management_record 
         where 
-	    (management_record.date_in > %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out > %s)
+	    (management_record.date_in >= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out >= %s)
 	or
-	    (management_record.date_in < %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out > %s)	   
+	    (management_record.date_in <= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out >= %s)	   
 	or 
-	    (management_record.date_in < %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out < %s)
+	    (management_record.date_in <= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out <= %s)
         or
-            (management_record.date_in > %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out < %s))
+            (management_record.date_in >= %s  and management_record.date_in <= %s
+            and management_record.date_out > %s and management_record.date_out <= %s))
              """
     form = SelectDateForm(request.POST or None)
     context = {'form': form}
@@ -71,17 +71,17 @@ def check_dates(date_in, date_out):
         (SELECT management_record.room_id 
 	from management_record 
         where 
-	    (management_record.date_in > %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out > %s)
+	    (management_record.date_in >= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out >= %s)
 	or
-	    (management_record.date_in < %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out > %s)	   
+	    (management_record.date_in <= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out >= %s)	   
 	or 
-	    (management_record.date_in < %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out < %s)
+	    (management_record.date_in <= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out <= %s)
         or
-            (management_record.date_in > %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out < %s))
+            (management_record.date_in >= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out <= %s))
         '''
     from django.db import connection, transaction
     cursor = connection.cursor()
@@ -102,6 +102,7 @@ class RecordForm(ModelForm):
     def clean_date_in(self):
         date_in = str(self.cleaned_data['date_in'])
         date_out = str(self.data['date_out'])
+        print(date_in)
         if not check_dates(date_in, date_out):
             raise forms.ValidationError("В это время комната уже занята")
         return date_in
