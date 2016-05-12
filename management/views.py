@@ -39,7 +39,7 @@ def listRooms(request):
     if request.method == 'POST' and form.is_valid():   
         date_in = form.cleaned_data['date_in']
         date_out = form.cleaned_data['date_out']
-        rooms = Room.objects.raw(sql,[date_in, date_out])
+        rooms = Room.objects.raw(sql,[str(date_in), str(date_out)])
     else:
         rooms = None
     return render(request, 'list_rooms.html',{
