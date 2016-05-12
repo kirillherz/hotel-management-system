@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^record/$', record),
     url(r'^bill/$', bill),
     url(r'^payment/$', add_payment),
+    url(r'', main),
 ]

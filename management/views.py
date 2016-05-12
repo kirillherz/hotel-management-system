@@ -107,6 +107,9 @@ def bill(request):
         room_price = record.room.tariff.units
         return render(request, 'bill.html', {'room_price' : room_price,'form':form, 'total' : total, 'payments' : payments})
     return render(request,'bill.html',{'form':form})
+
+def main(request):
+    return render(request, 'main.html',{})
     
     
     
