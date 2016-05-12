@@ -86,6 +86,13 @@ class RecordForm(ModelForm):
         if not is_free:
             raise forms.ValidationError("В это время комната уже занята")
         return date_in
+
+    def clean_date_out(self):
+        date_in = self.data['date_in']
+        date_out = self.data['date_out']
+        if date_in > date_out:
+            raise forms.ValidationError("Некоректная дата")
+        return date_out
         
 
     passport_series = forms.IntegerField(label = 'Cерия паспорта', validators = [series_validator],error_messages = {'invalid' : 'Некоректная серия','required' : 'обязательное поле',})
