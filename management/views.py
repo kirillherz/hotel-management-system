@@ -7,9 +7,7 @@ from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
 import datetime
 
-class SelectDateForm(forms.Form):
-
-    def data_validator(value):
+def date_validator(value):
         if value < datetime.datetime.now().date():
             raise forms.ValidationError('invalid', code = 'invalid')
 
