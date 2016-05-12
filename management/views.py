@@ -54,20 +54,8 @@ def listRooms(request):
         context['rooms'] = None
     return render(request, 'list_rooms.html',context)
 
-class RecordForm(ModelForm):
-
-    def series_validator(value):
-        if len(str(value)) != 4:
-            raise forms.ValidationError('invalid', code = 'invalid')
-
-    def passport_id_validator(value):
-        if len(str(value)) != 6:
-            raise forms.ValidationError('invalid', code = 'invalid')
-
-    def clean_date_in(self):
-        date_in = str(self.cleaned_data['date_in'])
-        date_out = str(self.data['date_out'])
-        sql = '''select
+def check_dates(date_in, date_out):
+    sql = '''select
 	       (management_record.date_in > %s  and management_record.date_in < %s
             and management_record.date_out > %s and management_record.date_out > %s)
 	or
@@ -81,11 +69,26 @@ class RecordForm(ModelForm):
             and management_record.date_out > %s and management_record.date_out < %s) as 'has_room'
                    from management_record
         '''
-        from django.db import connection, transaction
-        cursor = connection.cursor()
-        cursor.execute(sql, [date_in, date_out]*8)
-        is_close = bool(cursor.fetchone()[0])
-        if is_close:
+    from django.db import connection, transaction
+    cursor = connection.cursor()
+    cursor.execute(sql, [date_in, date_out]*8)
+    is_close = bool(cursor.fetchone()[0])
+    return not is_close
+
+class RecordForm(ModelForm):
+
+    def series_validator(value):
+        if len(str(value)) != 4:
+            raise forms.ValidationError('invalid', code = 'invalid')
+
+    def passport_id_validator(value):
+        if len(str(value)) != 6:
+            raise forms.ValidationError('invalid', code = 'invalid')
+
+    def clean_date_in(self):
+        date_in = str(self.cleaned_data['date_in'])
+        date_out = str(self.data['date_out'])
+        if not check_dates(date_in, date_out):
             raise forms.ValidationError("В это время комната уже занята")
         return date_in
 
