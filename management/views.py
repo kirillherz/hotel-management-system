@@ -64,6 +64,30 @@ class RecordForm(ModelForm):
         if len(str(value)) != 6:
             raise forms.ValidationError('invalid', code = 'invalid')
 
+    def clean_date_in(self):
+        date_in = str(self.cleaned_data['date_in'])
+        date_out = str(self.data['date_out'])
+        sql = '''select
+	      (management_record.date_in < %s 
+		   and management_record.date_in < %s
+		   and management_record.date_out < %s
+		   and management_record.date_out < %s)
+	       or 
+	      (management_record.date_in > %s 
+		   and management_record.date_in > %s
+		   and management_record.date_out > %s
+		   and management_record.date_out > %s) as 'has_room'
+                   from management_record
+        '''
+        from django.db import connection, transaction
+        cursor = connection.cursor()
+        cursor.execute(sql, [date_in, date_out]*4)
+        is_free = bool(cursor.fetchone()[0])
+        if not is_free:
+            raise forms.ValidationError("В это время комната уже занята")
+        return date_in
+        
+
     passport_series = forms.IntegerField(label = 'Cерия паспорта', validators = [series_validator],error_messages = {'invalid' : 'Некоректная серия','required' : 'обязательное поле',})
     passport_id = forms.IntegerField(label = 'Номер паспорта', validators = [passport_id_validator],error_messages = {'invalid' : 'Некоректный номер пасспорта', 'required' : 'обязательное поле'})
     date_in = forms.DateField(label = 'дата въезда', validators = [date_validator], error_messages = {'invalid' : 'Некоректная дата'})
