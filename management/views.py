@@ -62,8 +62,16 @@ def listRooms(request):
     return render(request, 'list_rooms.html',context)
 
 def check_dates(date_in, date_out):
-    sql = '''select
-	       (management_record.date_in > %s  and management_record.date_in < %s
+    sql = '''SELECT 
+       count(management_room.id)
+    from 
+       management_room
+    where 
+        management_room.id Not In
+        (SELECT management_record.room_id 
+	from management_record 
+        where 
+	    (management_record.date_in > %s  and management_record.date_in < %s
             and management_record.date_out > %s and management_record.date_out > %s)
 	or
 	    (management_record.date_in < %s  and management_record.date_in < %s
@@ -73,14 +81,13 @@ def check_dates(date_in, date_out):
             and management_record.date_out > %s and management_record.date_out < %s)
         or
             (management_record.date_in > %s  and management_record.date_in < %s
-            and management_record.date_out > %s and management_record.date_out < %s) as 'has_room'
-                   from management_record
+            and management_record.date_out > %s and management_record.date_out < %s))
         '''
     from django.db import connection, transaction
     cursor = connection.cursor()
     cursor.execute(sql, [date_in, date_out]*8)
-    is_close = bool(cursor.fetchone()[0])
-    return not is_close
+    is_free = bool(cursor.fetchone()[0])
+    return is_free
 
 class RecordForm(ModelForm):
 
