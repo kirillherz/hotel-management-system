@@ -68,22 +68,24 @@ class RecordForm(ModelForm):
         date_in = str(self.cleaned_data['date_in'])
         date_out = str(self.data['date_out'])
         sql = '''select
-	      (management_record.date_in < %s 
-		   and management_record.date_in < %s
-		   and management_record.date_out < %s
-		   and management_record.date_out < %s)
-	       or 
-	      (management_record.date_in > %s 
-		   and management_record.date_in > %s
-		   and management_record.date_out > %s
-		   and management_record.date_out > %s) as 'has_room'
+	       (management_record.date_in > %s  and management_record.date_in < %s
+            and management_record.date_out > %s and management_record.date_out > %s)
+	or
+	    (management_record.date_in < %s  and management_record.date_in < %s
+            and management_record.date_out > %s and management_record.date_out > %s)	   
+	or 
+	    (management_record.date_in < %s  and management_record.date_in < %s
+            and management_record.date_out > %s and management_record.date_out < %s)
+        or
+            (management_record.date_in > %s  and management_record.date_in < %s
+            and management_record.date_out > %s and management_record.date_out < %s) as 'has_room'
                    from management_record
         '''
         from django.db import connection, transaction
         cursor = connection.cursor()
-        cursor.execute(sql, [date_in, date_out]*4)
-        is_free = bool(cursor.fetchone()[0])
-        if not is_free:
+        cursor.execute(sql, [date_in, date_out]*8)
+        is_close = bool(cursor.fetchone()[0])
+        if is_close:
             raise forms.ValidationError("В это время комната уже занята")
         return date_in
 
