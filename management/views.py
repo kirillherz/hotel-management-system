@@ -41,16 +41,18 @@ def listRooms(request):
 	   )
              """
     form = SelectDateForm(request.POST or None)
+    context = {'form': form}
     if request.method == 'POST' and form.is_valid():   
         date_in = form.cleaned_data['date_in']
         date_out = form.cleaned_data['date_out']
         rooms = Room.objects.raw(sql,[str(date_in), str(date_out)]*4)
+        context['form'] = form
+        context['rooms'] = rooms
+        context['date_in'] = str(date_in)
+        context['date_out'] = str(date_out)
     else:
-        rooms = None
-    return render(request, 'list_rooms.html',{
-                                               'form' : form,
-                                               'rooms': rooms,
-                                              })
+        context['rooms'] = None
+    return render(request, 'list_rooms.html',context)
 
 class RecordForm(ModelForm):
 
@@ -80,12 +82,12 @@ class RecordForm(ModelForm):
                   'date_out',]
     
 @login_required(login_url = '/login/')
-def record(request, id_room = None):
+def record(request, id_room = None,date_in = None,date_out = None):
     if id_room == None:
         return HttpResponseRedirect('/rooms')
     room = Room.objects.get(pk = id_room)
     total = room.tariff.units
-    record = Record(room = room, total = total)
+    record = Record(room = room, total = total,date_in = date_in, date_out = date_out)
     form = RecordForm(request.POST or None, instance = record)
     if request.method == 'POST' and form.is_valid():
         form.save()

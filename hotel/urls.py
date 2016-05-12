@@ -21,7 +21,7 @@ from django.contrib.auth.views import login
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rooms/', listRooms),
-    url(r'^record/(\d*)/$', record),
+    url(r'^record/(\d*)/(\d{4}-\d{2}-\d{2})/(\d{4}-\d{2}-\d{2})/$', record),
     url(r'^record/$', record),
     url(r'^bill/$', bill),
     url(r'^payment/$', add_payment),
