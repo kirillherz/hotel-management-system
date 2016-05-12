@@ -20,32 +20,32 @@ class SelectDateForm(forms.Form):
 def listRooms(request):
     sql = """
     SELECT 
-      management_room.number, management_room.id
+       management_room.number, management_room.id
     from 
-      management_room
+       management_room
     where 
-      management_room.id =
-      (
-	   SELECT management_record.room_id 
-	   from management_record 
-          where 
-	      (management_record.date_in < %s 
-		   and management_record.date_in < %s
-		   and management_record.date_out < %s
-		   and management_record.date_out < %s)
-	   or 
-	      (management_record.date_in > %s 
-		   and management_record.date_in > %s
-		   and management_record.date_out > %s
-		   and management_record.date_out > %s)
-	   )
+        management_room.id Not In
+        (SELECT management_record.room_id 
+	from management_record 
+        where 
+	    (management_record.date_in > %s  and management_record.date_in < %s
+            and management_record.date_out > %s and management_record.date_out > %s)
+	or
+	    (management_record.date_in < %s  and management_record.date_in < %s
+            and management_record.date_out > %s and management_record.date_out > %s)	   
+	or 
+	    (management_record.date_in < %s  and management_record.date_in < %s
+            and management_record.date_out > %s and management_record.date_out < %s)
+        or
+            (management_record.date_in > %s  and management_record.date_in < %s
+            and management_record.date_out > %s and management_record.date_out < %s))
              """
     form = SelectDateForm(request.POST or None)
     context = {'form': form}
     if request.method == 'POST' and form.is_valid():   
         date_in = form.cleaned_data['date_in']
         date_out = form.cleaned_data['date_out']
-        rooms = Room.objects.raw(sql,[str(date_in), str(date_out)]*4)
+        rooms = Room.objects.raw(sql,[str(date_in), str(date_out)]*8)
         context['form'] = form
         context['rooms'] = rooms
         context['date_in'] = str(date_in)
