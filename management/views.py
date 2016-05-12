@@ -5,9 +5,15 @@ from django.shortcuts import render
 from .models import *
 from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
+import datetime
 
 class SelectDateForm(forms.Form):
-    date_in = forms.DateField(label = 'Дата въезда')
+
+    def data_validator(value):
+        if value < datetime.datetime.now().date():
+            raise forms.ValidationError('invalid', code = 'invalid')
+
+    date_in = forms.DateField(label = 'Дата въезда', validators = [data_validator],error_messages = {'invalid' : 'Введите корректную дату'})
     date_out = forms.DateField(label = 'Дата выезда')
 
 @login_required(login_url = '/login/')
