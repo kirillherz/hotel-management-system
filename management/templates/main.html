@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="nojs html" lang="ru-RU">
  <head>
   
@@ -7,19 +7,19 @@
   <title>HOTLEZ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <!-- CSS -->
-
-  <link rel="stylesheet" type="text/css" href="css/index.css?4039994870" id="pagesheet"/>
+  {%load staticfiles%}
+  <link rel="stylesheet" type="text/css" href="{% static "css/index.css" %}?4039994870" id="pagesheet"/>
   <!-- Other scripts -->
- 
+  
    </head>
  <body>
 
   <div class="clearfix borderbox" id="page">
    <div class="clip_frame grpelem" id="u94">
-    <img class="block" id="u94_img" src="images/bora.jpg" alt="" data-image-width="481" data-image-height="363"/>
+    <img class="block" id="u94_img" src="{% static "images/bora.jpg" %}" alt="" data-image-width="481" data-image-height="363"/>
    </div>
    <div class="clip_frame grpelem" id="u260">
-    <img class="block" id="u260_img" src="images/sv.png." alt="" data-image-width="176" data-image-height="225"/>
+    <img class="block" id="u260_img" src="{% static "images/sv.png." %}" alt="" data-image-width="176" data-image-height="225"/>
    </div>
    <div class="clearfix grpelem" id="u275-5">
     <p><a class="nonblock" href="">КОМНАТЫ</a></p>
