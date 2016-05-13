@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^rooms/', listRooms),
     url(r'^record/(\d*)/(\d{4}-\d{2}-\d{2})/(\d{4}-\d{2}-\d{2})/$', record),
     url(r'^record/$', record),
+    url(r'^records/$', listRecords),
     url(r'^bill/$', bill),
     url(r'^payment/$', add_payment),
     url(r'^login/$', login, {'template_name' : 'login.html'}),

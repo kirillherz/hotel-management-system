@@ -24,6 +24,34 @@ class SelectDateForm(forms.Form):
     date_out = forms.DateField(label = 'Дата выезда')
 
 @login_required(login_url = '/login/')
+@login_required(login_url = '/login/')
+def listRecords(request):
+    sql = '''SELECT *
+	from management_record, management_room
+        where
+            management_record.room_id = management_room.id
+        and (
+	    (management_record.date_in >= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out >= %s)
+	or
+	    (management_record.date_in <= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out >= %s)	   
+	or 
+	    (management_record.date_in <= %s  and management_record.date_in <= %s
+            and management_record.date_out >= %s and management_record.date_out <= %s)
+        or
+            (management_record.date_in >= %s  and management_record.date_in <= %s
+            and management_record.date_out > %s and management_record.date_out <= %s))'''
+    form = SelectDateForm(request.POST or None)
+    form.fields['date_in'] = forms.DateField(label = 'Дата въезда')
+    context = {'form': form}
+    if request.method == 'POST' and form.is_valid():
+        date_in = str(form.cleaned_data['date_in'])
+        date_out = str(form.cleaned_data['date_out'])
+        context['records'] = Record.objects.raw(sql,[date_in, date_out]*8)
+    return render(request, 'list_records.html',context)
+
+@login_required(login_url = '/login/')
 def listRooms(request):
     sql = """
     SELECT 
