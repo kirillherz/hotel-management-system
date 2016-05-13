@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HOTLEZ</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+<body>
+<style>
+      h1{
+    text-align: center;
+    margin: 0 480px 0 500px;
+    background-color: #455A64;
+    font-family: AleksandraC;
+    color: white;
+    }
+    
+     .form {
+    padding: 20px 20px 20px 20px;
+    margin-left: 500px;
+    margin-right: 480px;
+    background-color: #607D8B;
+    }
+    
+    input,  textarea { 
+    padding: 9px;
+    border: solid 1px #E5E5E5;
+    outline: 0;
+    font: normal 13px/100% Verdana,  Tahoma, sans-serif;
+    width: 200px;
+    background: #FFFFFF;
+}
+textarea { 
+    width: 400px;
+    max-width: 400px;
+    height: 150px;
+    line-height: 150%;
+}
+input:hover,  textarea:hover,
+    input:focus,  textarea:focus { 
+    border-color: #8D3232; 
+}
+.form label  { 
+    margin-left: 10px; 
+    color: #999999; 
+}
+.submit  input {
+    width: auto;
+    padding: 9px 15px;
+    background: #617798;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+}
+</style>
+Имя: {{ record.first_name }}
+<br>
+Фамилия: {{ record.last_name }}
+<br>
+Отчество {{ record.middle_name }}
+<br>
+Страна {{ record.country }}
+<br>
+Город {{ record.city }}
+<br>
+Серия паспорта {{ record.passport_series }}
+<br>
+Номер паспорта {{ record.passport_id }}
+<br>
+Кем выдан паспорт {{ record.issued }}
+<br>
+Дата рождения {{ record.date_of_birth }}
+<br>
+Дата въезда {{ record.date_in }}
+<br>
+Дата выезда {{ record.date_out }}
+<br>
+Общий счет {{ record.total }}
+<br>
+Комната {{ record.room.number }}
+<br>
+Тип комнаты {{ record.room.tariff.name }}
+</form>
+</div>
+</body>
+</html>

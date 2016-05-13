@@ -24,6 +24,11 @@ class SelectDateForm(forms.Form):
     date_out = forms.DateField(label = 'Дата выезда')
 
 @login_required(login_url = '/login/')
+def recordView(request, id = None):
+    if id == None:
+        return HttpResponseRedirect('/records/')
+    return render(request, 'record_view.html',{'record': Record.objects.get(pk = id)})
+    
 @login_required(login_url = '/login/')
 def listRecords(request):
     sql = '''SELECT *
