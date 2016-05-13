@@ -26,7 +26,6 @@ class Tariff(models.Model):
 class Room(models.Model):
     number = models.IntegerField(verbose_name = 'Номер комнаты')
     tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
-    is_free = models.BooleanField(verbose_name = 'Свободна/занята')
  
     class Meta:
         verbose_name = 'Комната'
