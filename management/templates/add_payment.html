@@ -11,7 +11,35 @@
 
 
 <body>
+
+<h1>Выберите дополнительную услугу</h1>
+
 <style>
+    
+    
+     .main {
+    border: 1px solid #333; /* Рамка */
+    display: inline-block;
+    padding: 5px 15px; /* Поля */
+    text-decoration: none; /* Убираем подчёркивание */
+    color: #000; /* Цвет текста */
+  }
+    
+    h1{
+        text-align: center;
+        margin: 0 480px 0 500px;
+        background-color: #455A64;
+        font-family: AleksandraC;
+        color: white;
+    }
+    
+    .form {
+    padding: 20px 20px 20px 20px;
+    margin-left: 500px;
+    margin-right: 480px;
+    background-color: #607D8B;
+    }
+    
     input,  textarea { 
     padding: 9px;
     border: solid 1px #E5E5E5;
@@ -43,10 +71,20 @@ input:hover,  textarea:hover,
     color: #000;
 }
 </style>
+
+<div class="form">
+
 <form action='' method='post'>
 {% csrf_token %} 
 {{ form.as_p }}
-  <input type="submit">
+<input type="submit">
+  
+<br></br>
+<a href="/" class="main">На главную</a>
+<hr>
+  
 </form>
+
+</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,7 +13,17 @@
 <body>
     <h1>Выберите дату прибытия <br>
     и отбытия клиента</h1>
+    
 <style>
+    
+    .main {
+    border: 1px solid #333; /* Рамка */
+    display: inline-block;
+    padding: 5px 15px; /* Поля */
+    text-decoration: none; /* Убираем подчёркивание */
+    color: #000; /* Цвет текста */
+  }
+    
     h1{
         text-align: center;
         margin: 0 480px 0 500px;
@@ -60,11 +70,28 @@ input:hover,  textarea:hover,
     color: #000;
 }
 </style>
+
 <div class="form">
 <form action='/rooms/' method='post'>
     {% csrf_token %} 
 {{ form.as_p }} <h4>*формат даты: ГГГГ-ММ-ДД</h4>
+ 
+   <script language="JavaScript">
+temp_date = new Date();
+day = temp_date.getDate();
+month = temp_date.getMonth() + 1;
+year = temp_date.getFullYear();
+
+document.write("Сегодня: " + year + "-" + month + "-" + day );
+    </script>
+ 
+    <br></br>
+ 
   <input type="submit">
+   <br></br>
+
+<a href="/" class="main">На главную</a>
+     <hr>
  {%for room in rooms %}
 <br>
 Номер комнаты:   {{ room.number }} 

@@ -63,6 +63,9 @@ input:hover,  textarea:hover,
 {% csrf_token %} 
 {{ form.as_p }}
   <input type="submit">
+
+
+  
 {% for i in payments %}
 <br>
 Услуга:{{ i.service.name }}:{{ i.service.price}} X {{ i.size }}
