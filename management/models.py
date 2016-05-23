@@ -24,7 +24,7 @@ class Tariff(models.Model):
         verbose_name_plural = 'Тарифы'
     
 class Room(models.Model):
-    number = models.IntegerField(verbose_name = 'Номер комнаты')
+    number = models.IntegerField(unique = True, verbose_name = 'Номер комнаты')
     tariff = models.ForeignKey(Tariff, verbose_name = 'Тариф')
  
     class Meta:
